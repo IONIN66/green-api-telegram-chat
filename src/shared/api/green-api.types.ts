@@ -3,13 +3,23 @@ export type SendMessageResponse = {
 };
 
 export type CheckAccountResponse = {
-  exist: boolean;
-  chatId: string;
+  exist?: boolean;
+  chatId?: string;
   username?: string;
   phoneNumber?: number;
   fromCache?: boolean;
   status?: boolean;
   reason?: string;
+  data?: {
+    reason?: string;
+  };
+};
+
+export type GreenApiErrorResponse = {
+  reason?: string;
+  data?: {
+    reason?: string;
+  };
 };
 
 export type IncomingNotification = {

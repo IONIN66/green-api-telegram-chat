@@ -5,6 +5,7 @@ import axios from "axios";
 import { IMaskInput } from "react-imask";
 import { useChatStore } from "@/entities/chat/model/chat-store";
 import { checkAccount } from "@/shared/api/green-api";
+import type { GreenApiErrorResponse } from "@/shared/api/green-api.types";
 
 interface ICreateChatModalProps {
   isOpen: boolean;
@@ -33,19 +34,31 @@ export const CreateChatModal: FC<ICreateChatModalProps> = (props) => {
     },
   });
 
-  const normalizedPhoneNumber = phoneNumber.replace(/\D/g, "");
+  const normalizedPhoneNumber = `7${phoneNumber.replace(/\D/g, "")}`;
   const isPhoneNumberValid = /^7\d{10}$/.test(normalizedPhoneNumber);
 
   const getErrorMessage = () => {
     if (!createChatMutation.isError) {
+      if (createChatMutation.data?.status === false) {
+        return (
+          createChatMutation.data.reason ||
+          createChatMutation.data.data?.reason ||
+          "Не удалось проверить номер"
+        );
+      }
+
       if (createChatMutation.data && !createChatMutation.data.exist) {
         return "Telegram-аккаунт с таким номером не найден";
       }
       return null;
     }
 
-    if (axios.isAxiosError(createChatMutation.error)) {
-      return createChatMutation.error.response?.data?.reason || "Не удалось проверить номер";
+    if (axios.isAxiosError<GreenApiErrorResponse>(createChatMutation.error)) {
+      return (
+        createChatMutation.error.response?.data?.reason ||
+        createChatMutation.error.response?.data?.data?.reason ||
+        "Не удалось проверить номер"
+      );
     }
 
     return "Не удалось проверить номер";
@@ -57,6 +70,16 @@ export const CreateChatModal: FC<ICreateChatModalProps> = (props) => {
     createChatMutation.mutate(normalizedPhoneNumber);
   };
 
+  const handlePhoneAccept = (value: string) => {
+    setPhoneNumber(value);
+    createChatMutation.reset();
+  };
+
+  const preparePhoneNumber = (value: string, masked: { unmaskedValue: string }) => {
+    if (masked.unmaskedValue) return value;
+    return value.replace(/^\+?[78]/, "");
+  };
+
   return (
     <Modal opened={isOpen} onClose={onClose} title="Новый чат" centered>
       <form onSubmit={handleSubmit}>
@@ -65,14 +88,13 @@ export const CreateChatModal: FC<ICreateChatModalProps> = (props) => {
             component={IMaskInput}
             label="Номер телефона получателя"
             description="Номер в формате +7 (999) 123-45-67"
-            placeholder="+79991234567"
-            mask="+{7} (000) 000-00-00"
+            placeholder="999 123-45-67"
+            leftSection="+7"
+            mask="000 000-00-00"
+            prepare={preparePhoneNumber}
             unmask
             value={phoneNumber}
-            onAccept={(value) => {
-              setPhoneNumber(String(value));
-              createChatMutation.reset();
-            }}
+            onAccept={handlePhoneAccept}
             error={getErrorMessage()}
             inputMode="tel"
             autoFocus
