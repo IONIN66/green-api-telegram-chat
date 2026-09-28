@@ -1,0 +1,23 @@
+.composer {
+  padding: 12px max(24px, calc((100% - 820px) / 2));
+  background: var(--mantine-color-gray-0);
+  border-top: 1px solid var(--mantine-color-gray-3);
+}
+
+.input {
+  min-width: 0;
+  flex: 1;
+}
+
+.input textarea {
+  padding: 11px 15px;
+  border: 0;
+  border-radius: 22px;
+}
+
+@media (max-width: 720px) {
+  .composer {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}

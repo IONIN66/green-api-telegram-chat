@@ -1,0 +1,126 @@
+.window {
+  display: grid;
+  min-width: 0;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #b9cad5;
+}
+
+.header {
+  min-height: 72px;
+  background: rgb(255 255 255 / 96%);
+  border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.messages {
+  overflow-y: auto;
+  padding: 24px max(24px, calc((100% - 820px) / 2));
+  background-color: #b9cad5;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 16%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 12%) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.conversationStart {
+  width: fit-content;
+  margin: 10px auto 26px;
+  padding: 8px 14px;
+  text-align: center;
+  background: rgb(255 255 255 / 86%);
+  border-radius: var(--mantine-radius-lg);
+  box-shadow: 0 2px 8px rgb(52 76 91 / 12%);
+}
+
+.messageRow {
+  margin: 7px 0;
+}
+
+.messageBubble {
+  max-width: min(72%, 620px);
+  padding: 8px 11px 6px;
+  border-radius: 13px;
+  box-shadow: 0 1px 2px rgb(30 56 72 / 18%);
+}
+
+.incomingBubble {
+  background: white;
+  border-bottom-left-radius: 4px;
+}
+
+.outgoingBubble {
+  background: #e4ffcc;
+  border-bottom-right-radius: 4px;
+}
+
+.messageText {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.messageMeta {
+  display: flex;
+  min-width: 50px;
+  align-items: center;
+  justify-content: flex-end;
+  float: right;
+  gap: 2px;
+  margin: 4px 0 0 10px;
+  color: #72936a;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.incomingBubble .messageMeta {
+  color: #8c9aa3;
+}
+
+.messageError {
+  display: grid;
+  width: 15px;
+  height: 15px;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--mantine-color-red-6);
+  border-radius: 50%;
+  place-items: center;
+}
+
+.emptyChat {
+  background: var(--mantine-color-gray-0);
+}
+
+.emptyIcon {
+  margin-bottom: var(--mantine-spacing-xs);
+  box-shadow: 0 12px 28px rgb(36 129 204 / 30%);
+  opacity: 0.85;
+}
+
+.mobileBack {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .window {
+    position: absolute;
+    inset: 0;
+  }
+
+  .emptyChat {
+    display: none;
+  }
+
+  .mobileBack {
+    display: grid;
+  }
+
+  .messages {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .messageBubble {
+    max-width: 86%;
+  }
+}
