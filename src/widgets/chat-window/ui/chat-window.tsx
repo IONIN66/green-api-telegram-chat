@@ -54,6 +54,10 @@ export const ChatWindow: FC<IChatWindowProps> = () => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [activeMessages.length]);
 
+  const handleBackClick = () => {
+    setActiveChat("");
+  };
+
   if (!activeChat || !activeChatId) {
     return (
       <Center component="section" className={styles.emptyChat}>
@@ -65,7 +69,7 @@ export const ChatWindow: FC<IChatWindowProps> = () => {
             gradient={{ from: "#50a8e7", to: "#2481cc", deg: 145 }}
             className={styles.emptyIcon}
           >
-          <IconMessageCircle size={38} />
+            <IconMessageCircle size={38} />
           </ThemeIcon>
           <Text fw={600} size="lg">
             Выберите чат
@@ -86,7 +90,7 @@ export const ChatWindow: FC<IChatWindowProps> = () => {
           variant="subtle"
           color="gray"
           aria-label="Назад к чатам"
-          onClick={() => setActiveChat("")}
+          onClick={handleBackClick}
         >
           <IconArrowLeft size={22} />
         </ActionIcon>

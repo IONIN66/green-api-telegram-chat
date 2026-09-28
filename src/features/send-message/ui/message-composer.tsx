@@ -64,13 +64,17 @@ export const MessageComposer: FC<IMessageComposerProps> = (props) => {
     }
   };
 
+  const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMessageText(event.currentTarget.value);
+  };
+
   return (
     <Group align="flex-end" gap="sm" wrap="nowrap" className={styles.composer}>
       <Textarea
         aria-label="Сообщение"
         placeholder="Сообщение"
         value={messageText}
-        onChange={(event) => setMessageText(event.currentTarget.value)}
+        onChange={handleMessageChange}
         onKeyDown={handleKeyDown}
         autosize
         minRows={1}

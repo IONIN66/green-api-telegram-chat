@@ -33,6 +33,19 @@ export const ChatSidebar: FC<IChatSidebarProps> = () => {
     clearSession();
   };
 
+  const handleCreateChatOpen = () => {
+    setShowCreateChat(true);
+  };
+
+  const handleCreateChatClose = () => {
+    setShowCreateChat(false);
+  };
+
+  const handleChatSelect = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { chatId } = event.currentTarget.dataset;
+    if (chatId) setActiveChat(chatId);
+  };
+
   return (
     <Paper
       component="aside"
@@ -54,7 +67,7 @@ export const ChatSidebar: FC<IChatSidebarProps> = () => {
               variant="subtle"
               size="lg"
               aria-label="Новый чат"
-              onClick={() => setShowCreateChat(true)}
+              onClick={handleCreateChatOpen}
             >
               <IconMessagePlus size={21} />
             </ActionIcon>
@@ -82,7 +95,7 @@ export const ChatSidebar: FC<IChatSidebarProps> = () => {
             <Button
               variant="light"
               leftSection={<IconMessagePlus size={17} />}
-              onClick={() => setShowCreateChat(true)}
+              onClick={handleCreateChatOpen}
             >
               Новый чат
             </Button>
@@ -93,7 +106,8 @@ export const ChatSidebar: FC<IChatSidebarProps> = () => {
               className={`${styles.chat} ${chat.id === activeChatId ? styles.activeChat : ""}`}
               key={chat.id}
               type="button"
-              onClick={() => setActiveChat(chat.id)}
+              data-chat-id={chat.id}
+              onClick={handleChatSelect}
             >
               <Avatar color="blue" radius="xl">
                 {chat.title.slice(0, 1).toUpperCase()}
@@ -111,10 +125,7 @@ export const ChatSidebar: FC<IChatSidebarProps> = () => {
         )}
       </ScrollArea>
 
-      <CreateChatModal
-        isOpen={showCreateChat}
-        onClose={() => setShowCreateChat(false)}
-      />
+      <CreateChatModal isOpen={showCreateChat} onClose={handleCreateChatClose} />
     </Paper>
   );
 };

@@ -39,6 +39,16 @@ export const CredentialsForm: FC<ICredentialsFormProps> = () => {
     });
   };
 
+  const handleIdInstanceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIdInstance(event.currentTarget.value);
+  };
+
+  const handleApiTokenInstanceChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setApiTokenInstance(event.currentTarget.value);
+  };
+
   return (
     <Center component="main" mih="100vh" p="xl" className={styles.page}>
       <Paper w="100%" maw={440} radius="xl" p="xl" shadow="xl">
@@ -66,14 +76,14 @@ export const CredentialsForm: FC<ICredentialsFormProps> = () => {
               label="ID Instance"
               placeholder="4100000000"
               value={idInstance}
-              onChange={(event) => setIdInstance(event.currentTarget.value)}
+              onChange={handleIdInstanceChange}
               required
             />
             <PasswordInput
               label="API Token Instance"
               placeholder="Введите токен"
               value={apiTokenInstance}
-              onChange={(event) => setApiTokenInstance(event.currentTarget.value)}
+              onChange={handleApiTokenInstanceChange}
               required
             />
             <Alert
