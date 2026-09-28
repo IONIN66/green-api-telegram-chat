@@ -2,6 +2,8 @@
 
 Минималистичный React-клиент для отправки и получения текстовых сообщений Telegram через GREEN-API. Интерфейс адаптивный и визуально приближен к Telegram Web.
 
+Демо: [green-api-telegram-chat-mu.vercel.app](https://green-api-telegram-chat-mu.vercel.app/)
+
 ## Возможности
 
 - подключение по `idInstance` и `apiTokenInstance`;
